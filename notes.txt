@@ -1,0 +1,15 @@
+Init command :
+
+npx react-native init <project_name>
+
+npx react-native init <project_name> --template react-native-template-typescript (with typescript)
+
+Docs:
+
+Javascript: https://developer.mozilla.org/en-US/docs/Web/JavaScript
+
+RN Components: https://reactnative.dev/docs/components-and-apis
+
+Apis:
+
+Random user api: https://randomuser.me/documentation#howto
