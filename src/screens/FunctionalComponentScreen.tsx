@@ -1,55 +1,22 @@
-import React, { useState } from "react";
-import { View, StyleSheet, TextInput } from "react-native";
+import React from "react";
+import { View, StyleSheet } from "react-native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack/lib/typescript/src/types";
 
-// import Button from "../components/Button";
+import { StackProps } from "../types/navigation";
+import { User } from "../types/user";
 import List from "../components/List";
 
-type State = {
-  name: string;
-  email: string;
-}
+type Props = NativeStackScreenProps<StackProps, "Home">;
 
-const FnComoponent: React.FC = () => {
+const FnComoponent: React.FC<Props> = ({ navigation }) => {
 
-  // const [data, setData] = useState<State>({ name: "", email: "" });
-  // const [loading, setLoading] = useState<boolean>(false);
-
-  // const handleChange = (key: keyof State) => {
-  //   return (text: string) => {
-  //     setData({ ...data, [key]: text });
-  //   }
-  // }
-
-  // const handleSubmit = () => {
-  //   setLoading(true);
-  //   setTimeout(() => setLoading(false), 5000);
-  // }
+  const navigate = (user: User) => {
+    navigation.navigate("Profile", { user: user });
+  }
 
   return(
     <View style={styles.container}>
-      <List />
-      {/* <View style={styles.form}>
-          <TextInput
-            value={data.name}
-            onChangeText={handleChange("name")}
-            style={styles.input}
-            placeholder="Name"
-            placeholderTextColor="#2980b9"
-          />
-          <TextInput
-            value={data.email}
-            onChangeText={handleChange("email")}
-            style={styles.input}
-            placeholder="Email"
-            placeholderTextColor="#2980b9"
-          />
-          <Button
-            title="Submit"
-            onPress={handleSubmit}
-            style={styles.button}
-            loading={loading}
-          />
-      </View> */}
+      <List navigate={navigate} />
     </View>
   );
 }
@@ -57,30 +24,7 @@ const FnComoponent: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#2980b9"
-  },
-  text: {
-    fontSize: 16,
-    color: "#fff"
-  },
-  form: {
-    paddingHorizontal: 20,
-    paddingVertical: 30,
-    backgroundColor: "#fff",
-    width: "90%",
-    borderRadius: 5
-  },
-  input: {
-    padding: 15,
-    borderWidth: 2,
-    borderColor: "#2980b9",
-    marginBottom: 15,
-    borderRadius: 5,
-    color: "#2980b9",
-    fontSize: 16
-  },
-  button: {
-    backgroundColor: "#2980b9"
+    backgroundColor: "#8e44ad"
   }
 });
 

@@ -1,13 +1,33 @@
-import React from "react";
-import { FlatList, View, Text, StyleSheet, Image, Dimensions, ScrollView } from "react-native";
+import React, { useEffect, useState } from "react";
+import { FlatList, View, Text, StyleSheet, Image, Dimensions, TouchableOpacity } from "react-native";
+import { User } from "../types/user";
+import { ListSeperator, EmptyComponent } from "./Common";
 
-import { list } from "../utils/data";
+type Props = {
+  navigate: (user: User) => void;
+};
 
-const List: React.FC = () => {
+const List: React.FC<Props> = ({ navigate }) => {
 
-  const renderUser = (item: any) => {
+  const [users, setUsers] = useState<User[]>([]);
+
+  useEffect(() => {
+    fetch("https://randomuser.me/api/?results=20")
+      .then((res) => {
+        res.json().then(data => setUsers(data.results));
+      })
+      .catch((err) => {
+        console.log("Err", err)
+      });
+  }, []);
+
+  const renderUser = ({ item }: { item: User, index: number }) => {
     return(
-      <View style={styles.row} key={item.email}>
+      <TouchableOpacity
+        style={styles.row}
+        key={item.email}
+        onPress={() => navigate(item)}
+      >
         <View>
           <Image source={{ uri: item.picture.thumbnail }} style={styles.image} />
         </View>
@@ -21,23 +41,21 @@ const List: React.FC = () => {
             {item.location.city}, {item.location.state}, {item.location.country}
           </Text>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   }
 
   return(
     <>
       <Text style={styles.header}>Users</Text>
-      {/* <FlatList
-        data={list}
+      <FlatList
+        data={users}
         renderItem={renderUser}
         keyExtractor={(item) => item.email}
         style={styles.container}
-        ItemSeparatorComponent={() => <View style={styles.seperator} />}
-      /> */}
-      <ScrollView style={styles.container}>
-        {list.map(renderUser)}
-      </ScrollView>
+        ItemSeparatorComponent={ListSeperator}
+        ListEmptyComponent={EmptyComponent}
+      />
     </>
   );
 }
@@ -70,10 +88,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: "#ccc",
     width: Dimensions.get("window").width - 120
-  },
-  seperator: {
-    height: 1,
-    backgroundColor: "#aaa"
   },
   image: {
     height: 50,

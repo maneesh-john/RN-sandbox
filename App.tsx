@@ -1,8 +1,7 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, StatusBar, View } from 'react-native';
 
-import ClsComponent from './src/screens/ClassComponentScreen';
-import FnComoponent from './src/screens/FunctionalComponentScreen';
+import Navigation from './src/navigation/Navigation';
 
 const App = () => {
 
@@ -10,8 +9,7 @@ const App = () => {
     <View style={styles.container}>
       <SafeAreaView />
       <StatusBar barStyle="default" />
-      {/* <ClsComponent /> */}
-      <FnComoponent />
+      <Navigation />
     </View>
   );
 };
