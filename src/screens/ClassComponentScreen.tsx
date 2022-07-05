@@ -34,6 +34,10 @@ class ClsComponent extends Component<Props, State> {
     // ]);
   }
 
+  componentDidMount(){
+    console.warn("mounted")
+  }
+
   render(): React.ReactNode {
     return(
       <View style={styles.container}>
