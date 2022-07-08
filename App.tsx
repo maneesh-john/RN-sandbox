@@ -1,6 +1,7 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, StatusBar, View } from 'react-native';
 
+import ThemeProvider from './src/contexts/ThemeContext';
 import Navigation from './src/navigation/Navigation';
 
 const App = () => {
@@ -9,7 +10,9 @@ const App = () => {
     <View style={styles.container}>
       <SafeAreaView />
       <StatusBar barStyle="default" />
-      <Navigation />
+      <ThemeProvider>
+        <Navigation />
+      </ThemeProvider>
     </View>
   );
 };

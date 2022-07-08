@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { FlatList, View, Text, StyleSheet, Image, Dimensions, TouchableOpacity } from "react-native";
+
+import { ThemeContext } from "../contexts/ThemeContext";
 import { User } from "../types/user";
 import { ListSeperator, EmptyComponent } from "./Common";
 
@@ -10,6 +12,7 @@ type Props = {
 const List: React.FC<Props> = ({ navigate }) => {
 
   const [users, setUsers] = useState<User[]>([]);
+  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     fetch("https://randomuser.me/api/?results=20")
@@ -32,10 +35,14 @@ const List: React.FC<Props> = ({ navigate }) => {
           <Image source={{ uri: item.picture.thumbnail }} style={styles.image} />
         </View>
         <View>
-          <Text style={styles.nameText}>{item.name.first} {item.name.last}</Text>
-          <Text style={styles.emailText}>{item.email}</Text>
           <Text
-            style={styles.locationText}
+            style={[styles.nameText, { color: theme.header }]}
+          >
+            {item.name.first} {item.name.last}
+          </Text>
+          <Text style={[styles.emailText, { color: theme.subHeader }]}>{item.email}</Text>
+          <Text
+            style={[styles.locationText, { color: theme.text }]}
             numberOfLines={1}
           >
             {item.location.city}, {item.location.state}, {item.location.country}
@@ -47,7 +54,7 @@ const List: React.FC<Props> = ({ navigate }) => {
 
   return(
     <>
-      <Text style={styles.header}>Users</Text>
+      <Text style={[styles.header, { color: theme.accent }]}>Users</Text>
       <FlatList
         data={users}
         renderItem={renderUser}
@@ -66,7 +73,6 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 18,
-    color: "#fff",
     textAlign: "center",
     padding: 10
   },
@@ -77,16 +83,13 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   nameText: {
-    fontSize: 17,
-    color: "#eee"
+    fontSize: 17
   },
   emailText: {
-    fontSize: 16,
-    color: "#ddd"
+    fontSize: 16
   },
   locationText: {
     fontSize: 15,
-    color: "#ccc",
     width: Dimensions.get("window").width - 120
   },
   image: {

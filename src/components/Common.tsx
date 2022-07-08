@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, StyleSheet, ActivityIndicator } from "react-native";
+import { ThemeContext } from "../contexts/ThemeContext";
 
 export const ListSeperator: React.FC = () => {
-  return <View style={styles.seperator} />;
+
+  const { theme } = useContext(ThemeContext);
+
+  return <View style={[styles.seperator, { backgroundColor: theme.border }]} />;
 }
 
 export const EmptyComponent: React.FC = () => {
+
   return(
     <View>
       <ActivityIndicator size="small" color="#fff" />
@@ -15,7 +20,6 @@ export const EmptyComponent: React.FC = () => {
 
 const styles = StyleSheet.create({
   seperator: {
-    height: 1,
-    backgroundColor: "#aaa"
+    height: 1
   }
 });
